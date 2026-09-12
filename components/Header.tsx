@@ -59,8 +59,8 @@ export default function Header() {
       <div
         className={`transition-all duration-300 border-b ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-sm border-slate-200 py-3'
-            : 'bg-white border-slate-100 py-4 sm:py-5'
+            ? 'bg-white/80 backdrop-blur-md shadow-sm border-slate-200/60 py-3'
+            : 'bg-white/90 backdrop-blur-sm border-slate-100/80 py-4 sm:py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
