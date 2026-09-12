@@ -154,14 +154,14 @@ export default function Hero() {
             <div className="relative mx-auto max-w-md lg:max-w-none">
               
               {/* Ana Görsel Çerçevesi */}
-              <div className="relative h-[460px] sm:h-[520px] w-full rounded-3xl overflow-hidden shadow-xl border-2 border-white bg-slate-100">
+              <div className="relative h-[460px] sm:h-[520px] w-full rounded-3xl overflow-hidden shadow-xl border-2 border-white bg-slate-100 flex items-center justify-center">
                 <Image
-                  src={heroImage}
+                  src="/avatar-placeholder.png"
                   alt={`${doctorName} Kliniği - Osteopati Seansı`}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover object-center"
+                  className="object-contain p-12"
                 />
                 
                 {/* Karartma ve Bilgi Bandı */}
