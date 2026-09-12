@@ -91,14 +91,14 @@ export default function HakkimdaPage() {
           <div className="lg:col-span-4">
             <div className="sticky top-28 space-y-6">
               <div className="bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
-                <div className="relative h-[380px] w-full rounded-xl overflow-hidden bg-slate-100">
+                <div className="relative h-[380px] w-full rounded-xl overflow-hidden bg-slate-100 flex items-center justify-center">
                   <Image
-                    src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1000&q=80"
+                    src="/avatar-placeholder.png"
                     alt={SITE_CONFIG.name}
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 33vw"
-                    className="object-cover object-top"
+                    className="object-contain p-8"
                   />
                 </div>
                 <div className="p-4 text-center">

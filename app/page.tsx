@@ -46,15 +46,15 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 relative">
-              <div className="relative h-[440px] w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200">
+              <div className="relative h-[440px] w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200 bg-slate-100 flex items-center justify-center">
                 <Image
-                  src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1000&q=80"
+                  src="/avatar-placeholder.png"
                   alt={`${SITE_CONFIG.name} - Osteopat`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover object-top"
+                  className="object-contain p-8"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <div className="text-lg font-bold">{SITE_CONFIG.name}</div>
                   <div className="text-sm text-teal-300 font-medium">{SITE_CONFIG.credentials}</div>
