@@ -1,9 +1,20 @@
 import Link from 'next/link';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaInstagram, FaFacebookF, FaTwitter, FaLinkedinIn, FaClock } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaInstagram, FaFacebookF, FaLinkedinIn, FaClock } from 'react-icons/fa';
 import { SITE_CONFIG, CONTACT_INFO, SOCIAL_LINKS, NAV_LINKS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/content';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const content = getSiteContent();
+
+  const phone = content.general?.phone || CONTACT_INFO.phone;
+  const phoneRaw = phone.replace(/[^0-9]/g, '');
+  const clinicName = content.header?.clinicName || SITE_CONFIG.clinicName;
+  const address = content.general?.address || CONTACT_INFO.address;
+  const workingHours = content.general?.workingHours || CONTACT_INFO.workingHours;
+  const doctorName = content.general?.doctorName || SITE_CONFIG.name;
+  const footerDesc = content.footer?.description || 
+    "Kas-iskelet sistemi, omurga biyomekaniği ve ortopedik manuel terapi uygulamaları ile ağrının kökenine inen kanıta dayalı klinik yaklaşım.";
 
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -13,17 +24,16 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="inline-block">
               <span className="text-xl font-bold text-white tracking-tight block">
-                {SITE_CONFIG.name}
+                {doctorName}
               </span>
-              <span className="text-[10px] tracking-[0.18em] text-teal-400 uppercase font-medium">
-                {SITE_CONFIG.subTitle}
+              <span className="text-[10px] tracking-[0.14em] text-teal-400 uppercase font-medium">
+                {clinicName}
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Kas-iskelet sistemi, iç organlar ve sinir sistemi üzerindeki osteopatik ve manuel terapi
-              uygulamaları ile ağrının kökenine inen bütüncül klinik yaklaşım.
+              {footerDesc}
             </p>
-            {/* Sosyal Medya & DoktorTakvimi */}
+            {/* Sosyal Medya */}
             <div className="flex items-center space-x-3 pt-2">
               <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 bg-slate-800 hover:bg-teal-700 text-slate-300 hover:text-white rounded-lg flex items-center justify-center transition-colors">
                 <FaInstagram size={15} />
@@ -59,18 +69,18 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <FaMapMarkerAlt className="text-primary mt-1 shrink-0" size={14} />
-                <span className="text-sm text-gray-400">{CONTACT_INFO.address}</span>
+                <span className="text-sm text-gray-400">{address}</span>
               </div>
               <div className="flex items-center space-x-3">
                 <FaPhone className="text-primary shrink-0" size={14} />
-                <a href={`tel:${CONTACT_INFO.phone}`} className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  {CONTACT_INFO.phone}
+                <a href={`tel:${phoneRaw}`} className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  {phone}
                 </a>
               </div>
               <div className="flex items-center space-x-3">
                 <FaEnvelope className="text-primary shrink-0" size={14} />
-                <a href={`mailto:${CONTACT_INFO.email}`} className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  {CONTACT_INFO.email}
+                <a href={`mailto:${content.general?.email || CONTACT_INFO.email}`} className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  {content.general?.email || CONTACT_INFO.email}
                 </a>
               </div>
             </div>
@@ -82,9 +92,9 @@ export default function Footer() {
             <div className="space-y-2">
               <div className="flex items-center space-x-3">
                 <FaClock className="text-primary shrink-0" size={14} />
-                <span className="text-sm text-gray-400">{CONTACT_INFO.workingHours}</span>
+                <span className="text-sm text-gray-400">{workingHours}</span>
               </div>
-              <p className="text-sm text-gray-500 mt-2">Pazar günleri kapalıyız.</p>
+              <p className="text-sm text-teal-400 font-medium mt-2">Pazar günleri de dahil her gün açığız.</p>
             </div>
           </div>
         </div>
@@ -95,7 +105,7 @@ export default function Footer() {
             Sitede yer alan tüm içerikler bilgilendirme amaçlıdır, tanı ve tedavi için lütfen doktorunuza başvurun.
           </p>
           <p className="text-sm text-gray-500">
-            © {currentYear} {SITE_CONFIG.name}. Tüm hakları saklıdır.
+            {content.footer?.copyright || `© ${currentYear} ${doctorName}. Tüm hakları saklıdır.`}
           </p>
         </div>
       </div>

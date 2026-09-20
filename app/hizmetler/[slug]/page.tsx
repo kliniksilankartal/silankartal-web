@@ -122,7 +122,7 @@ export default async function HizmetDetayPage({ params }: PageProps) {
                 <p className="text-slate-600 text-sm leading-relaxed">
                   Her seans yaklaşık 45–60 dakika sürmektedir. İlk seansta detaylı bir postüral, biyomekanik ve
                   dokusal muayene gerçekleştirilir. Hastanın getirdiği MR, röntgen ve tetkik sonuçları birlikte
-                  incelenerek en uygun osteopatik tedavi stratejisi belirlenir.
+                  incelenerek en uygun klinik tedavi stratejisi belirlenir.
                 </p>
               </div>
             </div>
@@ -187,7 +187,7 @@ export default async function HizmetDetayPage({ params }: PageProps) {
             <SectionTitle
               badge="DİĞER YÖNTEMLER"
               title="Diğer Klinik Uygulamalarımız"
-              subtitle="Tedavi sürecinde uyguladığımız diğer osteopatik disiplinler."
+              subtitle="Tedavi sürecinde uyguladığımız diğer klinik hizmetler."
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherServices.map((s) => (

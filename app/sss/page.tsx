@@ -1,16 +1,20 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { FaPhone, FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp } from 'react-icons/fa';
 import FAQAccordion from '@/components/FAQAccordion';
 import SectionTitle from '@/components/SectionTitle';
-import { FAQ_DATA, SITE_CONFIG, CONTACT_INFO, SOCIAL_LINKS } from '@/lib/constants';
+import { FAQ_DATA, SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: `Sık Sorulan Sorular | ${SITE_CONFIG.name}`,
-  description: 'Osteopati, fizyoterapi seansları, tedavi süreci ve klinik randevuları hakkında merak edilen sorular.',
+  description: 'Fizyoterapi seansları, manuel terapi, tedavi süreci ve klinik randevuları hakkında merak edilen sorular.',
 };
 
 export default function SSSPage() {
+  const content = getSiteContent();
+  const faqList = content.faq && content.faq.length > 0 ? content.faq : FAQ_DATA;
+
   return (
     <div className="py-12 lg:py-20 bg-slate-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,11 +31,11 @@ export default function SSSPage() {
         <SectionTitle
           badge="MERAK EDİLENLER"
           title="Sık Sorulan Sorular"
-          subtitle="Osteopati seansları, seans süreleri, seans sıklığı ve tedavi süreci ile ilgili en çok yöneltilen sorular."
+          subtitle="Fizyoterapi seansları, seans süreleri, seans sıklığı ve tedavi süreci ile ilgili en çok yöneltilen sorular."
         />
 
         <div className="max-w-3xl mx-auto mb-16">
-          <FAQAccordion items={FAQ_DATA} />
+          <FAQAccordion items={faqList} />
         </div>
 
         {/* Yardım Kutusu */}
@@ -56,7 +60,7 @@ export default function SSSPage() {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
             >
               <FaWhatsapp size={16} />
-              <span>WhatsApp'tan Sorun</span>
+              <span>WhatsApp&apos;tan Sorun</span>
             </a>
           </div>
         </div>

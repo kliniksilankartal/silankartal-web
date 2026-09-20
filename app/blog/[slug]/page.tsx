@@ -115,7 +115,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
             <div className="text-base font-bold text-slate-900">{SITE_CONFIG.name}</div>
             <div className="text-xs font-semibold text-teal-700">{SITE_CONFIG.credentials}</div>
             <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Bu makale kas-iskelet sistemi, omurga biyomekaniği ve osteopatik yaklaşımlar hakkında bilgilendirme amacıyla kaleme alınmıştır.
+              Bu makale kas-iskelet sistemi, omurga biyomekaniği ve fizyoterapi yaklaşımları hakkında bilgilendirme amacıyla kaleme alınmıştır.
             </p>
           </div>
           <Link

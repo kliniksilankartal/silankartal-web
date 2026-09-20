@@ -5,13 +5,26 @@ import ContactForm from '@/components/ContactForm';
 import GoogleMap from '@/components/GoogleMap';
 import SectionTitle from '@/components/SectionTitle';
 import { CONTACT_INFO, SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: `İletişim & Randevu | ${SITE_CONFIG.name}`,
-  description: `${SITE_CONFIG.name} Fulya Şişli Kliniği randevu, iletişim ve ulaşım bilgileri.`,
+  title: `İletişim & Danışma | ${SITE_CONFIG.name}`,
+  description: `${SITE_CONFIG.name} Başakşehir Kliniği iletişim ve ulaşım bilgileri.`,
 };
 
 export default function IletisimPage() {
+  const content = getSiteContent();
+
+  const phone = content.general?.phone || CONTACT_INFO.phone;
+  const phoneRaw = phone.replace(/[^0-9]/g, '');
+  const clinicName = content.header?.clinicName || SITE_CONFIG.clinicName;
+  const address = content.general?.address || CONTACT_INFO.address;
+  const workingHours = content.general?.workingHours || CONTACT_INFO.workingHours;
+  const email = content.general?.email || CONTACT_INFO.email;
+  const whatsappUrl = content.general?.whatsapp 
+    ? `https://wa.me/${content.general.whatsapp.replace(/[^0-9]/g, '')}` 
+    : SOCIAL_LINKS.whatsapp;
+
   return (
     <div className="py-12 lg:py-20 bg-slate-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,7 +40,7 @@ export default function IletisimPage() {
 
         <SectionTitle
           badge="İLETİŞİM & LOKASYON"
-          title="Klinik Randevu ve Danışma"
+          title="Klinik İletişim ve Danışma"
           subtitle="Seans talebinde bulunmak, sorularınızı iletmek veya adres tarifimiz için bize dilediğiniz kanaldan ulaşabilirsiniz."
         />
 
@@ -35,7 +48,8 @@ export default function IletisimPage() {
           
           {/* İletişim Formu */}
           <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-sm">
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Randevu ve Bilgi Formu</h3>
+            <h3 className="text-xl font-bold text-slate-900 mb-1">İletişim ve Danışma Formu</h3>
+            <span className="text-xs text-teal-700 font-semibold block mb-3">{clinicName}</span>
             <p className="text-slate-500 text-xs mb-6">
               Lütfen şikayetinizi ve uygun olduğunuz gün/saat aralığını belirtiniz. En kısa sürede geri dönüş yapılacaktır.
             </p>
@@ -52,8 +66,8 @@ export default function IletisimPage() {
               </div>
               <div>
                 <h4 className="font-bold text-slate-900 text-sm mb-1">Klinik Adresi</h4>
-                <p className="text-slate-600 text-xs leading-relaxed">{CONTACT_INFO.address}</p>
-                <p className="text-[11px] text-teal-700 font-semibold mt-1">Metrobüs, metro ve otopark imkanı mevcuttur.</p>
+                <p className="text-slate-600 text-xs leading-relaxed">{address}</p>
+                <p className="text-[11px] text-teal-700 font-semibold mt-1">Ebik İş Merkezi Kat: 2 Daire: 10</p>
               </div>
             </div>
 
@@ -65,14 +79,14 @@ export default function IletisimPage() {
               <div className="flex-1">
                 <h4 className="font-bold text-slate-900 text-sm mb-1">Telefon ve WhatsApp</h4>
                 <a
-                  href={`tel:${CONTACT_INFO.phone}`}
+                  href={`tel:${phoneRaw}`}
                   className="text-base font-bold text-teal-700 hover:text-teal-800 block"
                 >
-                  {CONTACT_INFO.phone}
+                  {phone}
                 </a>
                 <div className="mt-2">
                   <a
-                    href={SOCIAL_LINKS.whatsapp}
+                    href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#25D366] hover:underline"
@@ -92,10 +106,10 @@ export default function IletisimPage() {
               <div>
                 <h4 className="font-bold text-slate-900 text-sm mb-1">E-posta</h4>
                 <a
-                  href={`mailto:${CONTACT_INFO.email}`}
+                  href={`mailto:${email}`}
                   className="text-xs text-slate-600 hover:text-teal-700 transition-colors font-medium"
                 >
-                  {CONTACT_INFO.email}
+                  {email}
                 </a>
               </div>
             </div>
@@ -106,15 +120,15 @@ export default function IletisimPage() {
                 <FaClock size={14} />
               </div>
               <div className="text-xs text-slate-600">
-                <h4 className="font-bold text-slate-900 text-sm mb-1">Seans ve Çalışma Saatleri</h4>
-                <p>{CONTACT_INFO.workingHours}</p>
-                <p className="text-slate-400 mt-1">Pazar günleri ve resmi tatillerde kapalıyız.</p>
+                <h4 className="font-bold text-slate-900 text-sm mb-1">Çalışma Saatleri</h4>
+                <p className="font-semibold text-slate-800">{workingHours}</p>
+                <p className="text-emerald-700 font-medium mt-1">Pazar günleri de dahil olmak üzere haftanın her günü açığız.</p>
               </div>
             </div>
 
             {/* DoktorTakvimi Doğrulama */}
             <div className="p-4 bg-teal-50/50 rounded-xl border border-teal-200/70 flex items-center justify-between text-xs">
-              <span className="font-medium text-teal-900">DoktorTakvimi Profil & Değerlendirmeler</span>
+              <span className="font-medium text-teal-900">DoktorTakvimi Profil &amp; Değerlendirmeler</span>
               <a
                 href="https://www.doktortakvimi.com"
                 target="_blank"

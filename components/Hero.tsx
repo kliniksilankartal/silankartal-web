@@ -45,10 +45,10 @@ export default function Hero() {
         <div className="flex flex-wrap items-center gap-3 mb-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#155E54]/15 shadow-2xs text-xs font-semibold text-[#155E54]">
             <span className="w-2 h-2 rounded-full bg-[#155E54] animate-pulse" />
-            <span>Nişantaşı Kliniği — {CONTACT_INFO.city}</span>
+            <span>Başakşehir Kliniği — {CONTACT_INFO.shortAddress}</span>
           </div>
           <span className="hidden sm:inline text-xs text-[#526663] font-medium">
-            Bütüncül Osteopati & Ortopedik Manuel Terapi
+            Ortopedik Manuel Terapi & Klinik Fizyoterapi
           </span>
         </div>
 
@@ -70,47 +70,62 @@ export default function Hero() {
 
             <p className="text-[#526663] text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
               Omurga, bel ve boyun fıtıklarında sadece semptomları baskılamak yerine;
-              kas-iskelet sistemi, iç organ fasyası ve kranial sinir ritmi arasındaki
-              doğal dengeyi yeniden kuruyoruz. Her danışan için birebir, sakin ve kanıta dayalı
-              bir iyileşme süreci.
+              kas-iskelet biyomekaniği, eklem mobilitesi ve postüral dengeyi
+              kanıtlanmış manuel terapi teknikleriyle restore ediyoruz. Her danışan için birebir, sakin ve kişiselleştirilmiş
+              bir rehabilitasyon süreci.
             </p>
 
             {/* DİNAMİK KART SİSTEMİ (EN YENİ 3 KART VİTRİNDE) */}
             <div className="space-y-3 pt-1">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {featuredCards.map((card) => (
-                  <div key={card.id} className="p-3.5 bg-white rounded-xl border border-slate-200/70 shadow-2xs">
-                    <div className="text-xs font-bold text-[#155E54] uppercase tracking-wider mb-1 line-clamp-1">
+                  <div
+                    key={card.id}
+                    className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-2xs hover:border-[#155E54]/30 transition-all group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#EBF5F3] text-[#155E54] flex items-center justify-center text-xs font-bold mb-2.5">
+                      ✓
+                    </div>
+                    <div className="text-sm font-bold text-[#192624] mb-1 group-hover:text-[#155E54] transition-colors">
                       {card.title}
                     </div>
-                    <div className="text-xs text-[#526663] leading-snug line-clamp-2">
+                    <p className="text-xs text-[#526663] leading-relaxed">
                       {card.description}
-                    </div>
+                    </p>
                   </div>
                 ))}
               </div>
 
-              {/* KUYRUKTAN ÇIKAN ESKİ KARTLAR İÇİN GENİŞLETİLEBİLİR ALT SATIR */}
-              {isExpanded && remainingCards.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 animate-fadeIn">
+              {/* Açılır / Kapanır Diğer Kartlar (Accordion) */}
+              {remainingCards.length > 0 && (
+                <div
+                  className={`grid grid-cols-1 sm:grid-cols-3 gap-3 overflow-hidden transition-all duration-300 ease-in-out ${
+                    isExpanded ? 'max-h-96 opacity-100 pt-1' : 'max-h-0 opacity-0 pointer-events-none'
+                  }`}
+                >
                   {remainingCards.map((card) => (
-                    <div key={card.id} className="p-3.5 bg-slate-50/90 rounded-xl border border-slate-200/90 shadow-2xs">
-                      <div className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1 line-clamp-1">
+                    <div
+                      key={card.id}
+                      className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-2xs hover:border-[#155E54]/30 transition-all group"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-[#EBF5F3] text-[#155E54] flex items-center justify-center text-xs font-bold mb-2.5">
+                        ✓
+                      </div>
+                      <div className="text-sm font-bold text-[#192624] mb-1 group-hover:text-[#155E54] transition-colors">
                         {card.title}
                       </div>
-                      <div className="text-xs text-slate-500 leading-snug line-clamp-2">
+                      <p className="text-xs text-[#526663] leading-relaxed">
                         {card.description}
-                      </div>
+                      </p>
                     </div>
                   ))}
                 </div>
               )}
 
-              {/* GENİŞLET / DARALT BUTONU */}
               {remainingCards.length > 0 && (
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#155E54] hover:text-[#0E433C] pt-1 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#155E54] hover:text-[#0E433C] py-1 transition-colors cursor-pointer"
                 >
                   <span>
                     {isExpanded ? 'Daha Az Göster' : `Diğer Uzmanlık ve Yöntemleri Gör (+${remainingCards.length})`}
@@ -139,7 +154,7 @@ export default function Hero() {
                 <span>WhatsApp ile Danışın</span>
               </a>
               <a
-                href={`tel:${CONTACT_INFO.phone}`}
+                href={`tel:${CONTACT_INFO.phoneRaw}`}
                 className="inline-flex items-center justify-center gap-2 text-[#192624] hover:text-[#155E54] text-xs font-semibold px-4 py-3 transition-colors"
               >
                 <FaPhone size={11} className="text-[#155E54]" />
@@ -157,7 +172,7 @@ export default function Hero() {
               <div className="relative h-[460px] sm:h-[520px] w-full rounded-3xl overflow-hidden shadow-xl border-2 border-white bg-slate-100 flex items-center justify-center">
                 <Image
                   src="/avatar-placeholder.png"
-                  alt={`${doctorName} Kliniği - Osteopati Seansı`}
+                  alt={`${doctorName} Kliniği - Fizyoterapi ve Manuel Terapi`}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -172,10 +187,10 @@ export default function Hero() {
                     {doctorName}
                   </div>
                   <div className="text-base font-semibold text-white mt-1">
-                    Osteopati & Fizyoterapi ve Rehabilitasyon
+                    Fizyoterapi ve Rehabilitasyon & Manuel Terapi
                   </div>
                   <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                    Valikonağı Caddesi, Nişantaşı / Şişli
+                    Necmettin Erbakan Cd. Ebik İş Merkezi K:2 D:10, Başakşehir
                   </p>
                 </div>
               </div>

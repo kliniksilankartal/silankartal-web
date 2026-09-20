@@ -7,7 +7,7 @@ import { SITE_CONFIG } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: `Blog & Sağlık Rehberi | ${SITE_CONFIG.name}`,
-  description: 'Bel ve boyun fıtığı, manuel terapi, osteopati ve omurga sağlığı hakkında bilimsel ve klinik bilgilendirme yazıları.',
+  description: 'Bel ve boyun fıtığı, manuel terapi, rehabilitasyon ve omurga sağlığı hakkında bilimsel ve klinik bilgilendirme yazıları.',
 };
 
 export default function BlogPage() {
@@ -28,7 +28,7 @@ export default function BlogPage() {
 
         <SectionTitle
           badge="BİLGİ MERKEZİ & MAKALELER"
-          title="Fizyoterapi ve Osteopati Rehberi"
+          title="Fizyoterapi ve Manuel Terapi Rehberi"
           subtitle="Kas-iskelet sistemi rahatsızlıkları, fonksiyonel tıp yaklaşımları ve sağlıklı yaşam üzerine klinik makaleler."
         />
 

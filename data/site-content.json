@@ -2,27 +2,198 @@
   "theme": "emerald",
   "general": {
     "doctorName": "Fzt. Şilan Kartal",
-    "title": "Osteopati & Fizyoterapi",
-    "phone": "+90 555 555 55 55",
-    "whatsapp": "+905555555556",
-    "email": "iletisim@silankartal.com",
-    "address": "Valikonağı Cad. No:48, Nişantaşı, Şişli / İstanbul",
-    "city": "Şişli / İstanbul",
-    "workingHours": "Pzt - Cmt: 09:00 - 19:00"
+    "title": "Fizyoterapi & Manuel Terapi",
+    "phone": "0545 190 10 60",
+    "whatsapp": "+905451901060",
+    "email": "iletisim@silankartal.com.tr",
+    "address": "Necmettin Erbakan Caddesi, Ebik İş Merkezi, Kat: 2, Daire: 10, Başakşehir / İstanbul",
+    "city": "Başakşehir / İstanbul",
+    "workingHours": "Her gün: 08:00 - 22:00"
+  },
+  "header": {
+    "clinicName": "Özel Sağlık Merkezi",
+    "credentials": "Uzm. Fizyoterapist"
   },
   "images": {
     "heroImage": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80",
-    "profileImage": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1000&q=80",
+    "profileImage": "/uploads/1789936703500-u7luh1.jpg",
     "clinicImage": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80"
   },
   "hero": {
-    "badge": "Nişantaşı Kliniği — Şişli / İstanbul",
-    "badgeSub": "Bütüncül Osteopati & Ortopedik Manuel Terapi",
+    "badge": "Başakşehir Kliniği — İstanbul",
+    "badgeSub": "Fizyoterapi & Manuel Terapi",
     "titlePrefix": "Bedeni bir bütün olarak dinliyor, ağrının",
     "titleHighlight": "gerçek kaynağını",
     "titleSuffix": "çözüyoruz.",
-    "description": "Sadece semptomları baskılamak yerine omurga biyomekaniği, visseral gerilimler ve sinir sisteminin uyumunu değerlendiriyoruz."
+    "description": "Sadece semptomları baskılamak yerine omurga biyomekaniği, kas-iskelet sistemi ve sinir sisteminin uyumunu değerlendiriyoruz."
+  },
+  "about": {
+    "title": "Fzt. Şilan Kartal Kimdir?",
+    "subtitle": "Klinik Deneyim & Bütüncül Manuel Terapi Yaklaşımı",
+    "bio": "2018 yılında İstanbul Üniversitesi Fizyoterapi ve Rehabilitasyon Bölümü'nden onur derecesiyle mezun olmuştur. Mezuniyeti sonrasında omurga biyomekaniği, manuel terapi, klinik ortopedi ve sporcu rehabilitasyonu alanlarında uluslararası akreditasyona sahip ileri düzey uzmanlık eğitimlerini tamamlamıştır.",
+    "clinicExperience": "İstanbul Başakşehir'deki Özel Sağlık Merkezi'nde bel ve boyun fıtığı, kas-iskelet sistemi rahatsızlıkları, ameliyat sonrası ortopedik rehabilitasyon ve sporcu sakatlıkları üzerine kanıta dayalı, kişiye özel fizyoterapi hizmeti sunmaktadır.",
+    "education": [
+      "İstanbul Üniversitesi — Fizyoterapi ve Rehabilitasyon (Lisans)",
+      "Uluslararası Ortopedik Manuel Terapi (OMT) İleri Düzey Sertifikasyon",
+      "Klinik Kuru İğneleme & Miyofasyal Tetik Nokta Tedavisi Eğitimi",
+      "Klinik Pilates ve Omurga Biyomekaniği Eğitmenliği"
+    ],
+    "certifications": [
+      "Ortopedik Manuel Terapi & Eklem Mobilizasyonu",
+      "Klinik Nörodinamik & Sinir Mobilizasyonu",
+      "Miyofasyal Ağrı & Kuru İğneleme",
+      "Klinik Bantlama & Kinesiotaping"
+    ]
+  },
+  "footer": {
+    "description": "Fzt. Şilan Kartal Özel Sağlık Meslek Hizmet Birimi; Başakşehir'de bel ve boyun fıtığı, manuel terapi, sporcu rehabilitasyonu ve kas-iskelet sistemi rahatsızlıklarında kanıta dayalı, kişiye özel seanslar sunmaktadır.",
+    "copyright": "© 2026 Fzt. Şilan Kartal. Tüm hakları saklıdır."
+  },
+  "seo": {
+    "homeTitle": "Fzt. Şilan Kartal | Başakşehir Manuel Terapi & Fizyoterapi Kliniği",
+    "homeDescription": "Başakşehir'de bel ve boyun fıtığı, omurga sağlığı, ortopedik manuel terapi ve sporcu rehabilitasyonu alanlarında uzman klinik fizyoterapi hizmeti."
   },
   "featureCards": [],
-  "blogPosts": []
+  "blogPosts": [
+    {
+      "id": "blog-1",
+      "slug": "manuel-terapi-nedir",
+      "title": "Manuel Terapi Nedir? Kapsamlı Bir Rehber",
+      "excerpt": "Manuel terapi hakkında bilmeniz gereken her şey: tedavi yöntemleri, uygulama alanları ve faydaları.",
+      "date": "2024-01-15",
+      "readTime": "4 dk",
+      "coverImage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80",
+      "content": "## Manuel Terapi Hakkında\n\nManuel terapi, fizyoterapistler tarafından uygulanan, ellerin kullanıldığı özel tedavi tekniklerinin genel adıdır. Bu yaklaşım, kas-iskelet sistemi rahatsızlıklarında ağrıyı azaltmak, eklem hareket açıklığını artırmak ve fonksiyonel iyileşmeyi hızlandırmak amacıyla kullanılır.\n\n## Manuel Terapinin Temel İlkeleri\n\n1. **Bütüncül Yaklaşım:** Vücut bir bütün olarak değerlendirilir; ağrının kaynağı sadece semptomların olduğu bölge değil, tüm vücut mekaniği ile birlikte incelenir.\n2. **Bireysel Tedavi:** Her hastanın durumu farklıdır; tedavi programı kişiye özel olarak planlanır.\n3. **Kanıta Dayalı Uygulama:** Bilimsel araştırmalarla desteklenmiş teknikler kullanılır.\n4. **Aktif Katılım:** Hasta tedavi sürecine aktif olarak dahil edilir; ev egzersiz programları ile desteklenir.\n\n## Manuel Terapi Nasıl Uygulanır?\n\n- **Eklem Mobilizasyonu:** Eklemlerin fizyolojik hareket alanı içinde, kontrollü ve ritmik hareketlerle uygulanır.\n- **Yumuşak Doku Mobilizasyonu:** Kas, fasya ve bağ doku üzerinde uygulanan tekniklerle gerginlik giderilir.\n- **Miyofasyal Gevşetme:** Doku esnekliğini artırır.\n- **Kas Enerji Teknikleri (MET):** Kas dengesizliklerini düzeltir.\n- **Nöral Mobilizasyon:** Sinir dokusu üzerindeki mekanik kısıtlılıkları giderir.\n- **Trigger Point (Tetik Nokta) Tedavisi:** Kaslardaki ağrılı noktalara basınç uygulanarak rahatlama sağlanır.",
+      "published": true
+    },
+    {
+      "id": "blog-2",
+      "slug": "bel-fitigi-tedavisi",
+      "title": "Bel Fıtığı ve Fizik Tedavi: Ameliyatsız Çözüm Yolları",
+      "excerpt": "Bel fıtığında ameliyatsız çözüm yolları, manuel terapi teknikleri ve klinik egzersiz programları ile kalıcı iyileşme rehberi.",
+      "date": "2024-12-15",
+      "readTime": "5 dk",
+      "coverImage": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=80",
+      "content": "## Bel Fıtığı Nedir?\n\nBel fıtığı, omurlar arasındaki disklerin dışarı doğru taşması sonucu oluşan bir rahatsızlıktır. Disk materyali omurilik kanalına veya sinir köklerine baskı yaparak ağrı, uyuşma ve güçsüzlüğe neden olabilir.\n\n## Fizik Tedavi ile Ameliyatsız Çözüm\n\nAraştırmalar göstermektedir ki, bel fıtığına bağlı ağrıların %85-90'ı cerrahi müdahale olmadan tedavi edilebilmektedir. Fizik tedavi bu süreçte en önemli tedavi yaklaşımlarından biridir.\n\n### Tedavi Yöntemlerimiz\n\n1. **Manuel Terapi:** Eklem mobilizasyonları ve yumuşak doku teknikleri ile ağrı azaltılır\n2. **Bütüncül Değerlendirme:** Vücudun bütünsel değerlendirmesi yapılarak ağrının kök nedeni belirlenir\n3. **Terapötik Egzersiz:** Core stabilizasyon ve esneklik programları\n4. **Elektroterapi:** TENS, ultrason ve interferansiyel akım uygulamaları\n5. **Postür Eğitimi:** Doğru duruş ve vücut mekaniği öğretilir",
+      "published": true
+    },
+    {
+      "id": "blog-3",
+      "slug": "spor-yaralanmalari",
+      "title": "Spor Yaralanmalarında Fizyoterapi: Hızlı ve Güvenli İyileşme",
+      "excerpt": "Spor yaralanmaları sonrası fonksiyonel hareket kapasitesini geri kazandıran, spora güvenli ve güçlü dönüşü sağlayan fizik tedavi protokolleri.",
+      "date": "2025-02-20",
+      "readTime": "6 dk",
+      "coverImage": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80",
+      "content": "## Spor Yaralanmaları ve Fizyoterapi\n\nSpor yaralanmaları, aktif bireylerin en sık karşılaştığı sağlık problemlerinden biridir. Doğru ve zamanında uygulanan fizyoterapi, iyileşme süresini kısaltır, komplikasyon riskini azaltır ve spora güvenli dönüşü sağlar.\n\n## En Sık Görülen Spor Yaralanmaları\n\n### Kas Yaralanmaları\n- **Kas zorlanması (strain):** Kasın aşırı gerilmesi sonucu oluşur\n- **Kas kontüzyonu:** Doğrudan darbe sonucu oluşan çürük\n- **Kas yırtığı:** Kısmi veya tam kas yırtılması\n\n### Bağ Yaralanmaları\n- **Burkulma (sprain):** Bağların aşırı gerilmesi\n- **Ön çapraz bağ (ACL) yaralanması:** Diz stabilitesini etkileyen ciddi yaralanma\n- **Ayak bileği burkulması:** En sık görülen spor yaralanması\n\n## Fizyoterapi Rehabilitasyon Süreci\n\n- **Faz 1:** Akut Dönem (0-72 saat) ödem ve ağrı kontrolü\n- **Faz 2:** Subakut Dönem (3 gün - 3 hafta) eklem hareket açıklığı\n- **Faz 3:** Yeniden Yapılanma (3 hafta - 3 ay) kuvvetlendirme\n- **Faz 4:** Spora Dönüş ve performans testleri",
+      "published": true
+    }
+  ],
+  "services": [
+    {
+      "slug": "manuel-terapi",
+      "title": "Ortopedik Manuel Terapi",
+      "category": "Kas-İskelet Sistemi & Biyomekanik",
+      "shortDescription": "Eklem kilitlenmeleri, omurga blokajları ve kas spazmlarını kanıta dayalı manipülatif ve mobilizasyon teknikleriyle tedavi eder.",
+      "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80",
+      "detailedDescription": "Ortopedik Manuel Terapi; kas-iskelet sistemini oluşturan omurga eklemleri, periferik eklemler, bağlar ve kas dokusundaki fonksiyon bozukluklarını el ile değerlendirip tedavi eden bilimsel bir fizyoterapi yöntemidir.",
+      "benefits": [
+        "Akut ve kronik bel tutulması, lumbago",
+        "Boyun düzleşmesi ve servikal omurga blokajları",
+        "Donuk omuz ve omuz sıkışma sendromu",
+        "Tenisçi ve golfçü dirseği",
+        "Kalça ve diz eklem kısıtlılıkları",
+        "Miyofasyal ağrı sendromu ve kulunçlar"
+      ]
+    },
+    {
+      "slug": "bel-ve-boyun-fitigi-rehabilitasyonu",
+      "title": "Omurga Sağlığı & Fıtık Tedavisi",
+      "category": "Klinik Omurga Rehabilitasyonu",
+      "shortDescription": "Bel ve boyun fıtıklarında cerrahiye gerek kalmadan, sinir basısını ve ağrıyı ortadan kaldıran kişiye özel klinik rehabilitasyon.",
+      "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+      "detailedDescription": "Bel ve boyun fıtıklarında omurlar arasındaki disklerin sinir köklerine yaptığı bası; bacaklara veya kollara vuran ağrı, uyuşma ve hareket kısıtlılığı yaratır. Kliniğimizde uygulanan klinik omurga rehabilitasyonu ile omurga biyomekaniği yeniden düzenlenir.",
+      "benefits": [
+        "Bel fıtığı (Lomber disk hernisi) ve siyatik ağrısı",
+        "Boyun fıtığı (Servikal disk hernisi) ve kola vuran uyuşmalar",
+        "Kanal daralması (Spinal stenoz) kaynaklı yürüme güçlüğü",
+        "Faset eklem sendromu ve sabah tutuklukları",
+        "Omurga eğrilikleri ve postür bozuklukları"
+      ]
+    },
+    {
+      "slug": "sporcu-rehabilitasyonu",
+      "title": "Sporcu Rehabilitasyonu",
+      "category": "Performans & Spora Dönüş",
+      "shortDescription": "Spor yaralanmaları sonrası fonksiyonel hareket kapasitesini geri kazandıran, spora güvenli ve güçlü dönüşü sağlayan program.",
+      "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80",
+      "detailedDescription": "Sporcularda ve aktif bireylerde meydana gelen bağ, menisküs, tendon ve kas yaralanmalarında doku iyileşme fazlarına uygun rehabilitasyon protokolleri uygulanır.",
+      "benefits": [
+        "Ön çapraz bağ (ÖÇB) ve menisküs rehabilitasyonu",
+        "Ayak bileği burkulmaları ve bağ lezyonları",
+        "Kas yırtıkları ve hamstring zorlanmaları",
+        "Aşil tendinopatisi ve patellar tendinit",
+        "Omuz labrum ve rotator cuff lezyonları"
+      ]
+    },
+    {
+      "slug": "kuru-igneleme-ve-bantlama",
+      "title": "Kuru İğneleme & Kinezyolojik Bantlama",
+      "category": "Miyofasyal Tetik Nokta Tedavisi",
+      "shortDescription": "Kronikleşmiş kas spazmlarını, tetik noktaları ve fasyal yapışıklıkları hedef alarak dolaşımı ve doku rejenerasyonunu hızlandırır.",
+      "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80",
+      "detailedDescription": "Kuru iğneleme; kas dokusundaki kronik tetik noktalara özel steril iğnelerle girilerek yerel seğirme yanıtı oluşturan ve kas spazmını anında çözen etkili bir yöntemdir.",
+      "benefits": [
+        "Kronik boyun ve sırt kulunçları",
+        "Tetik noktalardan kaynaklanan baş ve omuz ağrıları",
+        "Kas zorlanmaları sonrası fasya sertlikleri",
+        "Ödem ve lenfatik drenaj desteği",
+        "Eklem stabilitesini destekleyici kinezyolojik bantlama"
+      ]
+    },
+    {
+      "slug": "klinik-egzersiz-ve-postur-analizi",
+      "title": "Klinik Egzersiz & Postür Analizi",
+      "category": "Fonksiyonel Düzeltici Egzersiz",
+      "shortDescription": "Kişiye özel postür ve biyomekanik analiz sonrasında hazırlanan, nüksleri önleyen ve kas dengesini sağlayan klinik egzersiz programı.",
+      "image": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1200&q=80",
+      "detailedDescription": "Omurga ve eklem sağlığının kalıcı olabilmesi için kas dengesizliklerinin düzeltilmesi ve zayıf kas gruplarının güçlendirilmesi esastır.",
+      "benefits": [
+        "Masa başı çalışanlarda postür bozuklukları (kamburluk, boyun düzleşmesi)",
+        "Skolyoz ve kifoz takibi için kişiye özel egzersiz",
+        "Core stabilizasyonu ve omurga koruma eğitimi",
+        "Günlük yaşam aktivitelerine yönelik ergonomik danışmanlık"
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Fizyoterapi seansı ne kadar sürer?",
+      "answer": "Bir fizyoterapi seansı genellikle 50-60 dakika sürer. İlk seansta detaylı klinik değerlendirme yapıldığı için süre biraz daha uzun olabilir. Tedavi planınız, şikayetlerinize ve ihtiyaçlarınıza göre kişiselleştirilir."
+    },
+    {
+      "question": "Manuel terapi nedir ve nasıl uygulanır?",
+      "answer": "Manuel terapi; eklem, kas ve sinir sistemine yönelik özel el teknikleriyle uygulanan kanıta dayalı bir fizyoterapi yöntemidir. Ağrıyı hafifletir, hareket kısıtlılığını giderir ve fonksiyonel iyileşmeyi hızlandırır."
+    },
+    {
+      "question": "Kaç seans tedavi görmem gerekir?",
+      "answer": "Tedavi süresi kişinin şikayetine, şikayetin süresine ve doku yanıtına göre değişir. Akut problemlerde 3-6 seans yeterli olabilirken, kronik durumlarda 8-12 seans gerekebilir. İlk değerlendirmeden sonra size özel bir tedavi planı oluşturulur."
+    },
+    {
+      "question": "Tedavi ağrılı mıdır?",
+      "answer": "Tedavi sırasında hafif bir rahatsızlık hissedebilirsiniz, ancak şiddetli ağrı olmamalıdır. Terapistiniz her zaman sizin konfor seviyenize göre teknik uygular. Tedavi sonrası hafif bir kas hassasiyeti normal olup genellikle 24-48 saat içinde geçer."
+    },
+    {
+      "question": "Hangi rahatsızlıklarda fizyoterapi uygulanır?",
+      "answer": "Bel ve boyun fıtığı, spor yaralanmaları, duruş bozuklukları, fibromiyalji, donuk omuz, tenisçi dirseği, diz kireçlenmesi, ameliyat sonrası rehabilitasyon ve kas-iskelet sistemi ağrılarında fizyoterapi uygulanabilir."
+    },
+    {
+      "question": "Kliniğiniz hangi gün ve saatlerde açık?",
+      "answer": "Kliniğimiz Pazar günleri de dahil olmak üzere haftanın her günü 08:00 - 22:00 saatleri arasında kesintisiz hizmet vermektedir."
+    },
+    {
+      "question": "Kliniğin tam konumu ve adresi neresidir?",
+      "answer": "Kliniğimiz İstanbul Başakşehir'de, Necmettin Erbakan Caddesi Ebik İş Merkezi Kat: 2, Daire: 10 adresindedir."
+    }
+  ]
 }

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { BlogPost, BlogFrontmatter } from './types';
+import { getSiteContent } from './content';
 
 /** Blog içeriklerinin bulunduğu dizin */
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog');
@@ -10,6 +11,25 @@ const BLOG_DIR = path.join(process.cwd(), 'content', 'blog');
  * Tüm blog yazılarını tarih sırasına göre (yeniden eskiye) döndürür
  */
 export function getAllPosts(): BlogPost[] {
+  try {
+    const siteContent = getSiteContent();
+    if (siteContent.blogPosts && siteContent.blogPosts.length > 0) {
+      return siteContent.blogPosts
+        .filter((p) => p.published !== false)
+        .map((p) => ({
+          slug: p.slug,
+          title: p.title,
+          date: p.date,
+          excerpt: p.excerpt,
+          coverImage: p.coverImage || '',
+          content: p.content || '',
+        }))
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }
+  } catch (err) {
+    console.error('Error reading posts from siteContent:', err);
+  }
+
   // content/blog dizini yoksa boş dizi döndür
   if (!fs.existsSync(BLOG_DIR)) {
     return [];
