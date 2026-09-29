@@ -3,7 +3,7 @@ import { NavLink, FAQItem } from './types';
 /** Site genel bilgileri */
 export const SITE_CONFIG = {
   name: 'Şilan Kartal',
-  clinicName: 'Özel Sağlık Merkezi',
+  clinicName: 'Özel Sağlık Meslek Hizmet Birimi',
   title: 'Fzt. Şilan Kartal – Fizyoterapi ve Rehabilitasyon & Manuel Terapi',
   description: 'Bel ve boyun fıtığı, omurga sağlığı, ortopedik manuel terapi ve klinik rehabilitasyon alanlarında kanıta dayalı fizyoterapi yaklaşımı.',
   url: 'https://silankartal.com.tr',
@@ -17,7 +17,7 @@ export const CONTACT_INFO = {
   phone: '0545 190 10 60',
   phoneFormatted: '+90 545 190 10 60',
   phoneRaw: '905451901060',
-  email: 'iletisim@silankartal.com.tr',
+  email: 'info@silankartal.com.tr',
   address: 'Necmettin Erbakan Caddesi, Ebik İş Merkezi, Kat: 2, Daire: 10, Başakşehir / İstanbul',
   shortAddress: 'Ebik İş Merkezi K:2 D:10, Necmettin Erbakan Cd.',
   city: 'Başakşehir, İstanbul',
