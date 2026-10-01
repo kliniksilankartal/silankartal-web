@@ -13,6 +13,8 @@ import { getLatestPosts } from '@/lib/mdx';
 import { SITE_CONFIG, CONTACT_INFO } from '@/lib/constants';
 import { getSiteContent } from '@/lib/content';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   const content = getSiteContent();
   return {
@@ -26,18 +28,30 @@ export default function HomePage() {
   const latestPosts = getLatestPosts(3);
   const activeServices = content.services && content.services.length > 0 ? content.services : defaultServices;
 
+  const homeSec = content.homeSections || {
+    servicesBadge: 'YÖNTEMLER & UYGULAMALAR',
+    servicesTitle: 'Klinik Fizyoterapi & Manuel Terapi',
+    servicesSubtitle: 'Kas-iskelet sistemi, omurga biyomekaniği ve eklem sağlığı için uluslararası kanıta dayalı manuel terapi teknikleri.',
+    blogBadge: 'BİLGİ MERKEZİ',
+    blogTitle: 'Son Eklenen Sağlık Makaleleri',
+    blogButtonText: 'Tüm Yazıları Gör',
+    locationBadge: 'LOKASYON & RANDEVU',
+    sundayText: 'Açık (08:00 - 22:00)',
+    locationButtonText: 'İletişime Geç',
+  };
+
   return (
     <>
       {/* Hero Section */}
-      <Hero />
+      <Hero initialContent={content} />
 
       {/* Yöntemler & Hizmetler Grid */}
       <section id="yontemler" className="py-16 lg:py-24 bg-slate-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            badge="YÖNTEMLER & UYGULAMALAR"
-            title="Klinik Fizyoterapi & Manuel Terapi"
-            subtitle="Kas-iskelet sistemi, omurga biyomekaniği ve eklem sağlığı için uluslararası kanıta dayalı manuel terapi teknikleri."
+            badge={homeSec.servicesBadge}
+            title={homeSec.servicesTitle}
+            subtitle={homeSec.servicesSubtitle}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {activeServices.map((service) => (
@@ -47,7 +61,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Terapist Hakkında & Klinik Yaklaşım Özeti */}
+      {/* Terapist Hakkında & Klinik Felsefemiz */}
       <section className="py-16 lg:py-24 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -64,46 +78,37 @@ export default function HomePage() {
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <div className="text-lg font-bold">{content.general.doctorName || SITE_CONFIG.name}</div>
                   <div className="text-sm text-teal-300 font-medium">{content.header.credentials || SITE_CONFIG.credentials}</div>
-                  <div className="text-xs text-slate-300 mt-1">İstanbul Üniversitesi Fizik Tedavi & Rehabilitasyon</div>
+                  <div className="text-xs text-slate-300 mt-1">{content.philosophy?.subNote || 'İstanbul Üniversitesi Fizik Tedavi & Rehabilitasyon'}</div>
                 </div>
               </div>
             </div>
 
             <div className="lg:col-span-7 space-y-6">
               <span className="text-xs font-bold tracking-[0.2em] text-teal-700 uppercase">
-                KLİNİK FELSEFEMİZ
+                {content.philosophy?.badge || 'KLİNİK FELSEFEMİZ'}
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Ağrıyı Değil, Ağrıyı Ortaya Çıkaran Mekanizmayı Tedavi Ediyoruz.
+                {content.philosophy?.title || 'Ağrıyı Değil, Ağrıyı Ortaya Çıkaran Mekanizmayı Tedavi Ediyoruz.'}
               </h2>
               <p className="text-slate-600 text-base leading-relaxed">
-                İnsan vücudu parçalardan oluşan bir makine değil, tüm kas-iskelet ve eklem sistemlerinin birbiriyle sürekli
-                iletişim halinde olduğu entegre bir bütündür. Bir boyun ağrısını sadece boyun kaslarına
-                masaj yaparak çözmek çoğu zaman geçici bir rahatlama sağlar.
+                {content.philosophy?.p1 || 'İnsan vücudu parçalardan oluşan bir makine değil, tüm kas-iskelet ve eklem sistemlerinin birbiriyle sürekli iletişim halinde olduğu entegre bir bütündür. Bir boyun ağrısını sadece boyun kaslarına masaj yaparak çözmek çoğu zaman geçici bir rahatlama sağlar.'}
               </p>
               <p className="text-slate-600 text-base leading-relaxed">
-                Kliniğimizde detaylı ortopedik ve postüral muayene ile omurganın mekanik dizilimini, eklem kısıtlılıklarını,
-                sinir mobilizasyonunu ve kas kuvvet dengesini bir arada
-                değerlendirerek kalıcı iyileşmeyi hedefliyoruz.
+                {content.philosophy?.p2 || 'Kliniğimizde detaylı ortopedik ve postüral muayene ile omurganın mekanik dizilimini, eklem kısıtlılıklarını, sinir mobilizasyonunu ve kas kuvvet dengesini bir arada değerlendirerek kalıcı iyileşmeyi hedefliyoruz.'}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-center gap-2 text-sm text-slate-800 font-medium">
-                  <FaCheckCircle className="text-teal-600 shrink-0" size={15} />
-                  <span>Kişiye özel birebir 50-60 dk seans</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-800 font-medium">
-                  <FaCheckCircle className="text-teal-600 shrink-0" size={15} />
-                  <span>Bilimsel ve kanıta dayalı manuel terapi</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-800 font-medium">
-                  <FaCheckCircle className="text-teal-600 shrink-0" size={15} />
-                  <span>Egzersiz ve ev reçetesi desteği</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-800 font-medium">
-                  <FaCheckCircle className="text-teal-600 shrink-0" size={15} />
-                  <span>Pazar dahil her gün 08:00 - 22:00</span>
-                </div>
+                {(content.philosophy?.checklist || [
+                  'Kişiye özel birebir 50-60 dk seans',
+                  'Bilimsel ve kanıta dayalı manuel terapi',
+                  'Egzersiz ve ev reçetesi desteği',
+                  'Pazar dahil her gün 08:00 - 22:00'
+                ]).map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-sm text-slate-800 font-medium">
+                    <FaCheckCircle className="text-teal-600 shrink-0" size={15} />
+                    <span>{item}</span>
+                  </div>
+                ))}
               </div>
 
               <div className="pt-2">
@@ -122,7 +127,7 @@ export default function HomePage() {
       </section>
 
       {/* Sık Karşılaşılan Rahatsızlıklar */}
-      <ConditionsList />
+      <ConditionsList initialData={content.conditions} />
 
       {/* Son Blog Yazıları */}
       {latestPosts.length > 0 && (
@@ -131,17 +136,17 @@ export default function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
               <div>
                 <span className="text-xs font-bold tracking-[0.2em] text-teal-700 uppercase">
-                  BİLGİ MERKEZİ
+                  {homeSec.blogBadge}
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
-                  Son Eklenen Sağlık Makaleleri
+                  {homeSec.blogTitle}
                 </h2>
               </div>
               <Link
                 href="/blog"
                 className="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-teal-700 hover:text-teal-800 group"
               >
-                <span>Tüm Yazıları Gör</span>
+                <span>{homeSec.blogButtonText}</span>
                 <FaArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -168,7 +173,7 @@ export default function HomePage() {
             <div className="lg:col-span-5 bg-white p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between h-full">
               <div className="space-y-4">
                 <span className="text-xs font-bold tracking-[0.2em] text-teal-700 uppercase">
-                  LOKASYON &amp; RANDEVU
+                  {homeSec.locationBadge}
                 </span>
                 <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
                   {content.header.clinicName || SITE_CONFIG.clinicName}
@@ -183,11 +188,11 @@ export default function HomePage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">Pazar Günü:</span>
-                    <span className="font-semibold text-emerald-600">Açık (08:00 - 22:00)</span>
+                    <span className="font-semibold text-emerald-600">{homeSec.sundayText}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">Telefon:</span>
-                    <a href={`tel:${content.general.phone.replace(/[^0-9]/g, '')}`} className="font-bold text-teal-700 hover:underline">
+                    <a href={`tel:${(content.general?.phone || CONTACT_INFO.phone).replace(/[^0-9]/g, '')}`} className="font-bold text-teal-700 hover:underline">
                       {content.general.phone || CONTACT_INFO.phone}
                     </a>
                   </div>
@@ -199,7 +204,7 @@ export default function HomePage() {
                   href="/iletisim"
                   className="w-full inline-flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 text-white py-3.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
                 >
-                  <span>İletişime Geç</span>
+                  <span>{homeSec.locationButtonText}</span>
                 </Link>
               </div>
             </div>

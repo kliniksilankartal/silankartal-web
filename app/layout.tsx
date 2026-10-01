@@ -5,6 +5,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { SITE_CONFIG } from '@/lib/constants';
+import { getSiteContent } from '@/lib/content';
+import { defaultCustomColors } from '@/lib/content-types';
 
 const inter = Inter({
   subsets: ['latin', 'latin-ext'],
@@ -46,13 +48,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = getSiteContent();
+  const colors = content.customColors || defaultCustomColors;
+
   return (
     <html lang="tr" className={inter.variable}>
-      <body className="font-sans antialiased">
+      <head>
+        {/* Dinamik Özel Renk Paleti Enjeksiyonu */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                --color-primary: ${colors.primary};
+                --color-primary-light: ${colors.secondary};
+                --color-secondary: ${colors.secondary};
+                --color-accent: ${colors.accent};
+                --color-text-primary: ${colors.dark};
+              }
+            `,
+          }}
+        />
+      </head>
+      <body className="font-sans antialiased text-slate-900 bg-white min-h-screen flex flex-col">
         <Header />
-        <main className="min-h-screen pt-24 lg:pt-28">
+        <div className="flex-1">
           {children}
-        </main>
+        </div>
         <Footer />
         <WhatsAppButton />
       </body>

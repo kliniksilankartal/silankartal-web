@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: 'Fizyoterapi seansları, manuel terapi, tedavi süreci ve klinik randevuları hakkında merak edilen sorular.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function SSSPage() {
   const content = getSiteContent();
   const faqList = content.faq && content.faq.length > 0 ? content.faq : FAQ_DATA;

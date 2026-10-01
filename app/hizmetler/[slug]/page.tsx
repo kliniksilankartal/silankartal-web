@@ -3,22 +3,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FaCheck, FaPhone, FaCalendarCheck, FaClock, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa';
-import { services, getServiceBySlug, getAllServiceSlugs } from '@/lib/services';
+import { services as defaultServices, getAllServiceSlugs } from '@/lib/services';
 import SectionTitle from '@/components/SectionTitle';
 import ServiceCard from '@/components/ServiceCard';
 import { CONTACT_INFO, SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
+import { getSiteContent } from '@/lib/content';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   return getAllServiceSlugs().map((slug) => ({ slug }));
 }
 
+function findService(slug: string) {
+  const content = getSiteContent();
+  const allServices = content.services && content.services.length > 0 ? content.services : defaultServices;
+  return allServices.find((s) => s.slug === slug);
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = findService(slug);
   if (!service) return {};
 
   return {
@@ -34,13 +44,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function HizmetDetayPage({ params }: PageProps) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const content = getSiteContent();
+  const allServices = content.services && content.services.length > 0 ? content.services : defaultServices;
+  const service = allServices.find((s) => s.slug === slug);
 
   if (!service) {
     notFound();
   }
 
-  const otherServices = services.filter((s) => s.slug !== slug).slice(0, 3);
+  const otherServices = allServices.filter((s) => s.slug !== slug).slice(0, 3);
+  const address = content.general?.address || CONTACT_INFO.address;
+  const phone = content.general?.phone || CONTACT_INFO.phone;
+  const workingHours = content.general?.workingHours || CONTACT_INFO.workingHoursShort;
+  const whatsappUrl = content.general?.whatsapp 
+    ? `https://wa.me/${content.general.whatsapp.replace(/[^0-9]/g, '')}` 
+    : SOCIAL_LINKS.whatsapp;
 
   return (
     <div className="py-10 lg:py-16 bg-slate-50/50">
@@ -93,28 +111,30 @@ export default async function HizmetDetayPage({ params }: PageProps) {
                   {service.title} Nedir ve Nasıl Uygulanır?
                 </h2>
                 <div className="space-y-4 text-slate-600 text-base leading-relaxed">
-                  {service.detailedDescription.split('\n\n').map((paragraph, index) => (
+                  {(service.detailedDescription || '').split('\n\n').map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                   ))}
                 </div>
               </div>
 
               {/* Endikasyonlar / Bu Tedavi Kimlere Uygulanır? */}
-              <div className="pt-8 border-t border-slate-100">
-                <h3 className="text-xl font-bold text-slate-900 mb-4">
-                  Hangi Şikayet ve Durumlarda Tercih Edilir?
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {service.benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
-                      <div className="w-5 h-5 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center shrink-0">
-                        <FaCheck size={9} />
+              {service.benefits && service.benefits.length > 0 && (
+                <div className="pt-8 border-t border-slate-100">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">
+                    Hangi Şikayet ve Durumlarda Tercih Edilir?
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {service.benefits.map((benefit, index) => (
+                      <div key={index} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                        <div className="w-5 h-5 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center shrink-0">
+                          <FaCheck size={9} />
+                        </div>
+                        <span className="text-slate-800 text-sm font-medium">{benefit}</span>
                       </div>
-                      <span className="text-slate-800 text-sm font-medium">{benefit}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Seans Süreci */}
               <div className="pt-8 border-t border-slate-100 space-y-3">
@@ -144,16 +164,16 @@ export default async function HizmetDetayPage({ params }: PageProps) {
               <div className="space-y-3.5 text-sm text-slate-600 border-t border-b border-slate-100 py-4">
                 <div className="flex items-center gap-3">
                   <FaClock className="text-teal-600 shrink-0" size={14} />
-                  <span>{CONTACT_INFO.workingHoursShort}</span>
+                  <span>{workingHours}</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <FaMapMarkerAlt className="text-teal-600 shrink-0 mt-1" size={14} />
-                  <span className="text-xs leading-relaxed">Vital Fulya Plaza, Şişli / İstanbul</span>
+                  <span className="text-xs leading-relaxed">{address}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <FaPhone className="text-teal-600 shrink-0" size={14} />
-                  <a href={`tel:${CONTACT_INFO.phone}`} className="font-bold text-slate-900 hover:text-teal-700">
-                    {CONTACT_INFO.phone}
+                  <a href={`tel:${phone.replace(/[^0-9]/g, '')}`} className="font-bold text-slate-900 hover:text-teal-700">
+                    {phone}
                   </a>
                 </div>
               </div>
@@ -167,7 +187,7 @@ export default async function HizmetDetayPage({ params }: PageProps) {
                   <span>Randevu Formu</span>
                 </Link>
                 <a
-                  href={SOCIAL_LINKS.whatsapp}
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white py-3 rounded-lg text-sm font-semibold transition-colors"
@@ -191,7 +211,7 @@ export default async function HizmetDetayPage({ params }: PageProps) {
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherServices.map((s) => (
-                <ServiceCard key={s.slug} service={s} />
+                <ServiceCard key={s.slug} service={s as any} />
               ))}
             </div>
           </div>

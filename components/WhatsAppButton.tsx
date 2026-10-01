@@ -1,9 +1,16 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { FaWhatsapp } from 'react-icons/fa';
 import { SOCIAL_LINKS } from '@/lib/constants';
 
 export default function WhatsAppButton() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <a
       href={SOCIAL_LINKS.whatsapp}

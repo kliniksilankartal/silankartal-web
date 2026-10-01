@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaGraduationCap, FaCertificate, FaPhone, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaGraduationCap, FaCertificate, FaPhone } from 'react-icons/fa';
 import SectionTitle from '@/components/SectionTitle';
 import { SITE_CONFIG, CONTACT_INFO } from '@/lib/constants';
 import { getSiteContent } from '@/lib/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: `Özgeçmiş | ${SITE_CONFIG.name}`,
@@ -69,25 +71,15 @@ export default function HakkimdaPage() {
                 </div>
               </div>
 
-              {/* DoktorTakvimi ve İletişim Kutusu */}
+              {/* Randevu & İletişim Kutusu */}
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-4">
                 <div className="text-xs font-bold tracking-wider text-slate-400 uppercase">
-                  Görüş & Değerlendirmeler
+                  Randevu &amp; Danışmanlık
                 </div>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Danışan yorumlarını ve klinik değerlendirmeleri DoktorTakvimi üzerinden inceleyebilirsiniz.
+                  Detaylı değerlendirme ve kişiye özel seans planlaması için bizimle doğrudan iletişime geçebilirsiniz.
                 </p>
-                <a
-                  href="https://www.doktortakvimi.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold py-2.5 rounded-lg transition-colors"
-                >
-                  <span>DoktorTakvimi Profili</span>
-                  <FaExternalLinkAlt size={10} />
-                </a>
-
-                <div className="pt-3 border-t border-slate-100">
+                <div>
                   <Link
                     href="/iletisim"
                     className="inline-flex items-center justify-center gap-2 w-full bg-teal-700 hover:bg-teal-800 text-white text-sm font-semibold py-3 rounded-lg transition-colors shadow-sm"

@@ -1,19 +1,35 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaInstagram, FaFacebookF, FaLinkedinIn, FaClock } from 'react-icons/fa';
 import { SITE_CONFIG, CONTACT_INFO, SOCIAL_LINKS, NAV_LINKS } from '@/lib/constants';
-import { getSiteContent } from '@/lib/content';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-  const content = getSiteContent();
+  const pathname = usePathname();
+  const [content, setContent] = useState<any>(null);
 
-  const phone = content.general?.phone || CONTACT_INFO.phone;
+  useEffect(() => {
+    fetch('/api/admin/content')
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch(() => {});
+  }, []);
+
+  // Admin sayfalarında Footer tamamen gizlenir
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
+  const currentYear = new Date().getFullYear();
+  const phone = content?.general?.phone || CONTACT_INFO.phone;
   const phoneRaw = phone.replace(/[^0-9]/g, '');
-  const clinicName = content.header?.clinicName || SITE_CONFIG.clinicName;
-  const address = content.general?.address || CONTACT_INFO.address;
-  const workingHours = content.general?.workingHours || CONTACT_INFO.workingHours;
-  const doctorName = content.general?.doctorName || SITE_CONFIG.name;
-  const footerDesc = content.footer?.description || 
+  const clinicName = content?.header?.clinicName || SITE_CONFIG.clinicName;
+  const address = content?.general?.address || CONTACT_INFO.address;
+  const workingHours = content?.general?.workingHours || CONTACT_INFO.workingHours;
+  const doctorName = content?.general?.doctorName || SITE_CONFIG.name;
+  const footerDesc = content?.footer?.description || 
     "Kas-iskelet sistemi, omurga biyomekaniği ve ortopedik manuel terapi uygulamaları ile ağrının kökenine inen kanıta dayalı klinik yaklaşım.";
 
   return (
@@ -79,8 +95,8 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-3">
                 <FaEnvelope className="text-primary shrink-0" size={14} />
-                <a href={`mailto:${content.general?.email || CONTACT_INFO.email}`} className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  {content.general?.email || CONTACT_INFO.email}
+                <a href={`mailto:${content?.general?.email || CONTACT_INFO.email}`} className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  {content?.general?.email || CONTACT_INFO.email}
                 </a>
               </div>
             </div>
@@ -105,7 +121,7 @@ export default function Footer() {
             Sitede yer alan tüm içerikler bilgilendirme amaçlıdır, tanı ve tedavi için lütfen doktorunuza başvurun.
           </p>
           <p className="text-sm text-gray-500">
-            {content.footer?.copyright || `© ${currentYear} ${doctorName}. Tüm hakları saklıdır.`}
+            {content?.footer?.copyright || `© ${currentYear} ${doctorName}. Tüm hakları saklıdır.`}
           </p>
         </div>
       </div>

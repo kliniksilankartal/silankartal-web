@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'Bel ve boyun fıtığı, manuel terapi, rehabilitasyon ve omurga sağlığı hakkında bilimsel ve klinik bilgilendirme yazıları.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function BlogPage() {
   const posts = getAllPosts();
 

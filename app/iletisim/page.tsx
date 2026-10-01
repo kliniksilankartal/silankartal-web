@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaWhatsapp, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaWhatsapp } from 'react-icons/fa';
 import ContactForm from '@/components/ContactForm';
 import GoogleMap from '@/components/GoogleMap';
 import SectionTitle from '@/components/SectionTitle';
 import { CONTACT_INFO, SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
 import { getSiteContent } from '@/lib/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: `İletişim & Danışma | ${SITE_CONFIG.name}`,
@@ -21,9 +23,17 @@ export default function IletisimPage() {
   const address = content.general?.address || CONTACT_INFO.address;
   const workingHours = content.general?.workingHours || CONTACT_INFO.workingHours;
   const email = content.general?.email || CONTACT_INFO.email;
-  const whatsappUrl = content.general?.whatsapp 
-    ? `https://wa.me/${content.general.whatsapp.replace(/[^0-9]/g, '')}` 
-    : SOCIAL_LINKS.whatsapp;
+  const whatsappRaw = (content.general?.whatsapp || CONTACT_INFO.phoneRaw).replace(/[^0-9]/g, '');
+  const whatsappUrl = `https://wa.me/${whatsappRaw}`;
+
+  const cPage = content.contactPage || {
+    formTitle: 'İletişim ve Danışma Formu',
+    formSubtitle: clinicName,
+    formDescription: 'Lütfen şikayetinizi ve uygun olduğunuz gün/saat aralığını belirtiniz. En kısa sürede geri dönüş yapılacaktır.',
+    addressDetail: 'Ebik İş Merkezi Kat: 2 Daire: 10',
+    whatsappText: 'WhatsApp üzerinden mesaj gönderin',
+    sundayNote: 'Pazar günleri de dahil olmak üzere haftanın her günü açığız.',
+  };
 
   return (
     <div className="py-12 lg:py-20 bg-slate-50/50">
@@ -46,17 +56,17 @@ export default function IletisimPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-start">
           
-          {/* İletişim Formu */}
+          {/* İletişim Formu (Sol Taraf) */}
           <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-sm">
-            <h3 className="text-xl font-bold text-slate-900 mb-1">İletişim ve Danışma Formu</h3>
-            <span className="text-xs text-teal-700 font-semibold block mb-3">{clinicName}</span>
+            <h3 className="text-xl font-bold text-slate-900 mb-1">{cPage.formTitle}</h3>
+            <span className="text-xs text-teal-700 font-semibold block mb-3">{cPage.formSubtitle || clinicName}</span>
             <p className="text-slate-500 text-xs mb-6">
-              Lütfen şikayetinizi ve uygun olduğunuz gün/saat aralığını belirtiniz. En kısa sürede geri dönüş yapılacaktır.
+              {cPage.formDescription}
             </p>
             <ContactForm />
           </div>
 
-          {/* İletişim Bilgileri Kartları */}
+          {/* İletişim Bilgileri Kartları (Sağ Taraf) */}
           <div className="lg:col-span-5 space-y-5">
             
             {/* Adres */}
@@ -67,7 +77,9 @@ export default function IletisimPage() {
               <div>
                 <h4 className="font-bold text-slate-900 text-sm mb-1">Klinik Adresi</h4>
                 <p className="text-slate-600 text-xs leading-relaxed">{address}</p>
-                <p className="text-[11px] text-teal-700 font-semibold mt-1">Ebik İş Merkezi Kat: 2 Daire: 10</p>
+                {cPage.addressDetail && (
+                  <p className="text-[11px] text-teal-700 font-semibold mt-1">{cPage.addressDetail}</p>
+                )}
               </div>
             </div>
 
@@ -92,7 +104,7 @@ export default function IletisimPage() {
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#25D366] hover:underline"
                   >
                     <FaWhatsapp size={13} />
-                    <span>WhatsApp üzerinden mesaj gönderin</span>
+                    <span>{cPage.whatsappText || 'WhatsApp üzerinden mesaj gönderin'}</span>
                   </a>
                 </div>
               </div>
@@ -122,24 +134,11 @@ export default function IletisimPage() {
               <div className="text-xs text-slate-600">
                 <h4 className="font-bold text-slate-900 text-sm mb-1">Çalışma Saatleri</h4>
                 <p className="font-semibold text-slate-800">{workingHours}</p>
-                <p className="text-emerald-700 font-medium mt-1">Pazar günleri de dahil olmak üzere haftanın her günü açığız.</p>
+                {cPage.sundayNote && (
+                  <p className="text-emerald-700 font-medium mt-1">{cPage.sundayNote}</p>
+                )}
               </div>
             </div>
-
-            {/* DoktorTakvimi Doğrulama */}
-            <div className="p-4 bg-teal-50/50 rounded-xl border border-teal-200/70 flex items-center justify-between text-xs">
-              <span className="font-medium text-teal-900">DoktorTakvimi Profil &amp; Değerlendirmeler</span>
-              <a
-                href="https://www.doktortakvimi.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-bold text-teal-700 hover:underline"
-              >
-                <span>İncele</span>
-                <FaExternalLinkAlt size={9} />
-              </a>
-            </div>
-
           </div>
 
         </div>

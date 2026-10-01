@@ -24,7 +24,6 @@ export const CONTACT_INFO = {
   workingHours: 'Pazartesi - Pazar (Her Gün): 08:00 - 22:00',
   workingHoursShort: 'Her Gün 08:00 - 22:00',
   mapEmbedUrl: 'https://maps.google.com/maps?q=Necmettin+Erbakan+Caddesi+Ba%C5%9Fak%C5%9Fehir+%C4%B0stanbul&t=&z=15&ie=UTF8&iwloc=&output=embed',
-  doctorCalendarUrl: 'https://www.doktortakvimi.com',
 } as const;
 
 /** Sosyal medya linkleri */

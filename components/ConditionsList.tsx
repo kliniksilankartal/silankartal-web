@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   FaCheck, 
@@ -10,43 +10,43 @@ import {
   FaShieldAlt,
   FaHeartbeat
 } from 'react-icons/fa';
+import { defaultConditions, ClinicConditions } from '@/lib/content-types';
 
-interface ConditionItem {
-  name: string;
-  category: string;
-}
+export default function ConditionsList({ initialData }: { initialData?: ClinicConditions }) {
+  const [data, setData] = useState<ClinicConditions>(initialData || defaultConditions);
 
-const CONDITIONS_WITH_CATEGORY: ConditionItem[] = [
-  { name: 'Bel Fıtığı (Lomber Disk Hernisi)', category: 'Omurga' },
-  { name: 'Boyun Fıtığı (Servikal Disk Hernisi)', category: 'Omurga' },
-  { name: 'Boyun Düzleşmesi & Sırt Ağrısı', category: 'Omurga' },
-  { name: 'Siyatik & Piriformis Sendromu', category: 'Sinir Sıkışması' },
-  { name: 'Baş Ağrısı ve Gerilim Tipi Migren', category: 'Nörolojik' },
-  { name: 'Kulak Çınlaması (Somatosensoriyel Tinnitus)', category: 'Baş-Boyun' },
-  { name: 'Diş Sıkma (Bruksizm)', category: 'Çene & TME' },
-  { name: 'Çene Eklemi Rahatsızlıkları (TME)', category: 'Çene & TME' },
-  { name: 'Donuk Omuz & Omuz Sıkışması', category: 'Eklem' },
-  { name: 'Diz Kireçlenmesi (Gonartroz) & Menisküs', category: 'Eklem' },
-  { name: 'Sporcu Yaralanmaları & Spora Dönüş', category: 'Sporcu' },
-  { name: 'Fibromiyalji & Kronik Ağrı Sendromu', category: 'Miyofasyal' },
-];
+  useEffect(() => {
+    fetch('/api/admin/content')
+      .then((res) => res.json())
+      .then((content) => {
+        if (content?.conditions) {
+          setData({
+            ...defaultConditions,
+            ...content.conditions,
+            items: content.conditions.items && content.conditions.items.length > 0 
+              ? content.conditions.items 
+              : defaultConditions.items
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
-export default function ConditionsList() {
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-b from-white via-slate-50/70 to-slate-100/50 border-b border-slate-200/60 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* Bölüm Başlığı */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF5F3] text-[#155E54] text-xs font-bold uppercase tracking-wider mb-3">
             <FaHeartbeat className="text-[#155E54]" />
-            <span>Klinik Tedavi Alanlarımız</span>
+            <span>{data.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-            Sık Karşılaştığımız Rahatsızlıklar &amp; Çözümler
+            {data.title}
           </h2>
           <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
-            Ağrıyı sadece baskılamak yerine; kök nedene inen biyomekanik ve manuel terapi odaklı klinik yaklaşım.
+            {data.subtitle}
           </p>
         </div>
 
@@ -61,26 +61,26 @@ export default function ConditionsList() {
             <div className="relative z-10 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/10 backdrop-blur-md text-emerald-200 text-xs font-bold uppercase tracking-wider">
                 <FaShieldAlt size={12} />
-                <span>Bütüncül Manuel Terapi</span>
+                <span>{data.cardBadge}</span>
               </div>
 
               <h3 className="text-2xl sm:text-3xl font-extrabold leading-snug tracking-tight text-white">
-                Vücuttaki problemi sadece ağrı olan bölgede aramıyoruz.
+                {data.cardTitle}
               </h3>
 
               <p className="text-emerald-100/90 text-sm sm:text-base leading-relaxed">
-                Ağrının kaynağını tespit ederek kas-iskelet ve eklem biyomekaniğini kalıcı biçimde restore ediyoruz. Omurga hizalanması, miyofasyal gerginlikler ve hareket kısıtlılıkları üzerinde çalışarak fonksiyonel dengeyi yeniden kazandırıyoruz.
+                {data.cardDesc}
               </p>
 
               {/* Alıntı Kutusu */}
               <div className="relative bg-black/25 backdrop-blur-md border border-white/15 rounded-2xl p-5 sm:p-6 text-xs sm:text-sm leading-relaxed text-emerald-50">
                 <FaQuoteLeft className="text-emerald-400/40 text-2xl absolute top-3 right-4 pointer-events-none" />
                 <p className="italic font-medium">
-                  &ldquo;Sadece semptomları geçici olarak rahatlatmak yerine; postüral zinciri, eklem biyomekaniğini ve kişiye özel klinik egzersizleri birleştirerek kalıcı ve ameliyatsız iyileşme sağlıyoruz.&rdquo;
+                  &ldquo;{data.quote}&rdquo;
                 </p>
                 <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-emerald-200">
-                  <span className="font-bold text-white">Fzt. Şilan Kartal</span>
-                  <span className="text-emerald-300/80">Klinik Direktörü</span>
+                  <span className="font-bold text-white">{data.quoteAuthor}</span>
+                  <span className="text-emerald-300/80">{data.quoteRole}</span>
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function ConditionsList() {
           {/* Sağ Kolon: Rahatsızlık Kartları Grid */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {CONDITIONS_WITH_CATEGORY.map((item, index) => (
+              {data.items.map((item, index) => (
                 <div
                   key={index}
                   className="group relative bg-white hover:bg-emerald-50/40 p-4 rounded-2xl border border-slate-200/90 hover:border-[#155E54]/40 transition-all duration-200 shadow-2xs hover:shadow-sm flex items-start gap-3.5"
@@ -123,12 +123,14 @@ export default function ConditionsList() {
             </div>
 
             {/* Alt Dipnot & Güven Rozeti */}
-            <div className="mt-6 p-4 rounded-2xl bg-white border border-slate-200/80 flex items-start sm:items-center gap-3">
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0 mt-1 sm:mt-0 animate-pulse" />
-              <p className="text-xs text-slate-600 leading-relaxed">
-                * Belirtilen rahatsızlıkların yanı sıra ameliyat öncesi/sonrası fizik tedavi, postür analizi ve kişiye özel klinik egzersiz programı uygulanmaktadır.
-              </p>
-            </div>
+            {data.bottomNote && (
+              <div className="mt-6 p-4 rounded-2xl bg-white border border-slate-200/80 flex items-start sm:items-center gap-3">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0 mt-1 sm:mt-0 animate-pulse" />
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  {data.bottomNote}
+                </p>
+              </div>
+            )}
           </div>
 
         </div>
