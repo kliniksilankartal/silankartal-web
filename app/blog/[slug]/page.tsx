@@ -95,6 +95,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
               fill
               priority
               className="object-cover"
+              unoptimized={Boolean(post.coverImage && post.coverImage.startsWith('data:'))}
             />
           </div>
         )}

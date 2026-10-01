@@ -73,6 +73,7 @@ export default function HomePage() {
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-contain p-8"
+                  unoptimized={Boolean(content.images?.profileImage && content.images.profileImage.startsWith('data:'))}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-6 left-6 right-6 text-white">

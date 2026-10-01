@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { writeFile, mkdir } from 'node:fs/promises';
+import path from 'node:path';
 
 export async function POST(request: Request) {
   try {
@@ -11,25 +11,83 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Dosya bulunamadı' }, { status: 400 });
     }
 
+    if (!file.type.startsWith('image/')) {
+      return NextResponse.json(
+        { error: 'Lütfen geçerli bir görsel dosyası seçin (PNG, JPG, WEBP).' },
+        { status: 400 }
+      );
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Güvenli dosya adı üret (timestamp + sanitize)
-    const ext = path.extname(file.name) || '.jpg';
-    const cleanName = Date.now() + '-' + Math.random().toString(36).substring(2, 8) + ext;
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+    let savedUrl: string | null = null;
 
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    // 1. Supabase Storage Kontrolü (Yapılandırılmışsa)
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (
+      supabaseUrl &&
+      serviceKey &&
+      !serviceKey.includes('placeholder') &&
+      !serviceKey.includes('your-')
+    ) {
+      try {
+        const { createClient } = await import('@supabase/supabase-js');
+        const supabase = createClient(supabaseUrl, serviceKey);
+        const ext = path.extname(file.name) || '.webp';
+        const filename = `uploads/${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`;
+
+        const { data, error } = await supabase.storage
+          .from('images')
+          .upload(filename, buffer, {
+            contentType: file.type || 'image/webp',
+            upsert: true,
+          });
+
+        if (!error && data) {
+          const { data: publicData } = supabase.storage
+            .from('images')
+            .getPublicUrl(filename);
+          savedUrl = publicData.publicUrl;
+        }
+      } catch (supaErr) {
+        console.warn('Supabase storage upload skipped:', supaErr);
+      }
     }
 
-    const filePath = path.join(uploadDir, cleanName);
-    fs.writeFileSync(filePath, buffer);
+    // 2. Yerel Disk Depolama (Vercel ortamında değilse)
+    if (!savedUrl && !process.env.VERCEL) {
+      try {
+        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+        await mkdir(uploadDir, { recursive: true });
 
-    const publicUrl = '/uploads/' + cleanName;
-    return NextResponse.json({ success: true, url: publicUrl });
-  } catch (error) {
+        const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+        const ext = path.extname(originalName) || '.webp';
+        const base = path.basename(originalName, ext);
+        const uniqueName = `${base}_${Date.now()}_${Math.random().toString(36).substring(2, 7)}${ext}`;
+
+        const filePath = path.join(uploadDir, uniqueName);
+        await writeFile(filePath, buffer);
+        savedUrl = `/uploads/${uniqueName}`;
+      } catch (fsErr: any) {
+        console.warn('Filesystem write failed (falling back to data URI):', fsErr.message);
+      }
+    }
+
+    // 3. Vercel / Serverless Salt-Okunur Sistem için Kesintisiz Fail-Safe: Base64 Data URI
+    if (!savedUrl) {
+      const mimeType = file.type || 'image/webp';
+      savedUrl = `data:${mimeType};base64,${buffer.toString('base64')}`;
+    }
+
+    return NextResponse.json({ success: true, url: savedUrl });
+  } catch (error: any) {
     console.error('Görsel yükleme hatası:', error);
-    return NextResponse.json({ error: 'Dosya yüklenemedi' }, { status: 500 });
+    return NextResponse.json(
+      { error: error?.message || 'Görsel yüklenirken bir sorun oluştu.' },
+      { status: 500 }
+    );
   }
 }

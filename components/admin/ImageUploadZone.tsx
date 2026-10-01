@@ -13,6 +13,75 @@ interface ImageUploadZoneProps {
   aspectRatio?: 'video' | 'landscape' | 'square' | 'portrait' | 'auto';
 }
 
+/**
+ * İstemci tarafında büyük görselleri sıkıştırarak sunucuya hızlı ve sorunsuz yüklenmesini sağlar.
+ */
+async function compressImageIfNeeded(file: File, maxWidth = 1920, maxHeight = 1920, quality = 0.85): Promise<File> {
+  if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+    return file;
+  }
+
+  // Dosya zaten küçükse (örneğin 500KB altı) sıkıştırmaya gerek yok
+  if (file.size < 500 * 1024) {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = document.createElement('img');
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        let { width, height } = img;
+
+        if (width <= maxWidth && height <= maxHeight && file.size < 1024 * 1024) {
+          resolve(file);
+          return;
+        }
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        if (height > maxHeight) {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(file);
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              resolve(file);
+              return;
+            }
+            const cleanName = file.name.replace(/\.[^/.]+$/, '') + '.webp';
+            const compressedFile = new File([blob], cleanName, {
+              type: 'image/webp',
+              lastModified: Date.now(),
+            });
+            resolve(compressedFile);
+          },
+          'image/webp',
+          quality
+        );
+      };
+      img.onerror = () => resolve(file);
+    };
+    reader.onerror = () => resolve(file);
+  });
+}
+
 export default function ImageUploadZone({
   label,
   description,
@@ -23,6 +92,7 @@ export default function ImageUploadZone({
 }: ImageUploadZoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -32,17 +102,22 @@ export default function ImageUploadZone({
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      setError('Görsel boyutu en fazla 5MB olabilir.');
+    if (file.size > 10 * 1024 * 1024) {
+      setError('Görsel boyutu en fazla 10MB olabilir.');
       return;
     }
 
     setError(null);
     setIsUploading(true);
+    setUploadStatus('Görsel optimize ediliyor...');
 
     try {
+      // 1. İstemci tarafında optimize et
+      const optimizedFile = await compressImageIfNeeded(file);
+
+      setUploadStatus('Görsel yükleniyor...');
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', optimizedFile);
 
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
@@ -51,7 +126,7 @@ export default function ImageUploadZone({
 
       const data = await res.json();
       if (!res.ok || data.error) {
-        throw new Error(data.error || 'Yükleme başarısız');
+        throw new Error(data.error || 'Yükleme başarısız oldu.');
       }
 
       if (data.url) {
@@ -61,6 +136,7 @@ export default function ImageUploadZone({
       setError(err.message || 'Görsel yüklenirken bir sorun oluştu.');
     } finally {
       setIsUploading(false);
+      setUploadStatus(null);
     }
   };
 
@@ -96,6 +172,8 @@ export default function ImageUploadZone({
       ? 'aspect-square'
       : 'h-48 sm:h-56';
 
+  const isDataUri = Boolean(currentImage && currentImage.startsWith('data:'));
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
@@ -106,7 +184,7 @@ export default function ImageUploadZone({
           <button
             type="button"
             onClick={onImageRemoved}
-            className="text-xs text-red-600 hover:text-red-700 flex items-center gap-1 font-semibold transition-colors"
+            className="text-xs text-red-600 hover:text-red-700 flex items-center gap-1 font-semibold transition-colors cursor-pointer"
           >
             <FaTrash size={10} /> Görseli Kaldır
           </button>
@@ -129,6 +207,7 @@ export default function ImageUploadZone({
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 400px"
+            unoptimized={isDataUri}
           />
           <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-2xs">
             <button
@@ -155,7 +234,7 @@ export default function ImageUploadZone({
           {isUploading ? (
             <div className="flex flex-col items-center gap-2 text-teal-700">
               <FaSpinner className="animate-spin" size={24} />
-              <span className="text-xs font-bold">Görsel yükleniyor...</span>
+              <span className="text-xs font-bold">{uploadStatus || 'Görsel yükleniyor...'}</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-2">
@@ -170,7 +249,7 @@ export default function ImageUploadZone({
                   veya cihazınızdan dosya seçmek için <span className="text-teal-700 font-semibold underline">tıklayın</span>
                 </p>
               </div>
-              <span className="text-[10px] text-slate-400 font-medium">PNG, JPG, WEBP (Maks. 5MB)</span>
+              <span className="text-[10px] text-slate-400 font-medium">PNG, JPG, WEBP (Otomatik Optimize Edilir)</span>
             </div>
           )}
         </div>

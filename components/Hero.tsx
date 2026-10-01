@@ -189,6 +189,7 @@ export default function Hero({ initialContent }: { initialContent?: SiteContent 
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-cover"
+                  unoptimized={Boolean(heroImage && heroImage.startsWith('data:'))}
                 />
                 
                 {/* Karartma ve Bilgi Bandı */}

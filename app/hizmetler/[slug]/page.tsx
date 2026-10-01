@@ -83,6 +83,7 @@ export default async function HizmetDetayPage({ params }: PageProps) {
             fill
             priority
             className="object-cover opacity-75"
+            unoptimized={Boolean(service.image && service.image.startsWith('data:'))}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
           <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 right-6 sm:right-10 text-white max-w-3xl">

@@ -48,6 +48,7 @@ export default function HakkimdaPage() {
                   sizes="(max-width: 1024px) 100vw, 33vw"
                   className="object-cover object-top"
                   priority
+                  unoptimized={Boolean(content.images?.profileImage && content.images.profileImage.startsWith('data:'))}
                 />
               </div>
 
