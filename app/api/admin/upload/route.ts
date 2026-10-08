@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { createServerClient, isSupabaseConfigured } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
@@ -24,40 +25,36 @@ export async function POST(request: Request) {
     let savedUrl: string | null = null;
 
     // 1. Supabase Storage Kontrolü (Yapılandırılmışsa)
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (
-      supabaseUrl &&
-      serviceKey &&
-      !serviceKey.includes('placeholder') &&
-      !serviceKey.includes('your-')
-    ) {
+    if (isSupabaseConfigured()) {
       try {
-        const { createClient } = await import('@supabase/supabase-js');
-        const supabase = createClient(supabaseUrl, serviceKey);
-        const ext = path.extname(file.name) || '.webp';
-        const filename = `uploads/${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`;
+        const supabase = createServerClient();
+        if (supabase) {
+          const ext = path.extname(file.name) || '.webp';
+          const filename = `uploads/${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`;
 
-        const { data, error } = await supabase.storage
-          .from('images')
-          .upload(filename, buffer, {
-            contentType: file.type || 'image/webp',
-            upsert: true,
-          });
-
-        if (!error && data) {
-          const { data: publicData } = supabase.storage
+          const { data, error } = await supabase.storage
             .from('images')
-            .getPublicUrl(filename);
-          savedUrl = publicData.publicUrl;
+            .upload(filename, buffer, {
+              contentType: file.type || 'image/webp',
+              upsert: true,
+            });
+
+          if (!error && data) {
+            const { data: publicData } = supabase.storage
+              .from('images')
+              .getPublicUrl(filename);
+            savedUrl = publicData.publicUrl;
+            console.log('Görsel Supabase Storage üzerine başarıyla yüklendi:', savedUrl);
+          } else if (error) {
+            console.warn('Supabase storage upload error:', error.message);
+          }
         }
       } catch (supaErr) {
-        console.warn('Supabase storage upload skipped:', supaErr);
+        console.warn('Supabase storage upload failed:', supaErr);
       }
     }
 
-    // 2. Yerel Disk Depolama (Vercel ortamında değilse)
+    // 2. Yerel Disk Depolama (Vercel ortamında değilse veya Supabase yoksa)
     if (!savedUrl && !process.env.VERCEL) {
       try {
         const uploadDir = path.join(process.cwd(), 'public', 'uploads');

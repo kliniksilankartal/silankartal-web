@@ -35,7 +35,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         : posts[idx].readTime,
     };
     posts[idx] = updated;
-    saveSiteContent({ ...siteContent, blogPosts: posts });
+    await saveSiteContent({ ...siteContent, blogPosts: posts });
 
     revalidatePath('/');
     revalidatePath('/blog');
@@ -58,7 +58,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
     if (!post) return NextResponse.json({ error: 'Yazı bulunamadı.' }, { status: 404 });
 
     const filtered = posts.filter((p) => p.id !== id);
-    saveSiteContent({ ...siteContent, blogPosts: filtered });
+    await saveSiteContent({ ...siteContent, blogPosts: filtered });
 
     revalidatePath('/');
     revalidatePath('/blog');

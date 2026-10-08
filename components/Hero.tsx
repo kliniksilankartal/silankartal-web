@@ -30,7 +30,12 @@ export default function Hero({ initialContent }: { initialContent?: SiteContent 
   const remainingCards = featureCards.slice(3);
 
   // Dinamik Veriler
-  const heroImage = content?.images?.heroImage || 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80';
+  // Eğer heroImage açıkça '' olarak kaldırılmışsa varsayılan yoga görseline geri dönme
+  const rawHeroImage = content?.images?.heroImage;
+  const isHeroImageRemoved = rawHeroImage === '';
+  const heroImage = isHeroImageRemoved 
+    ? '' 
+    : (rawHeroImage || 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80');
   const doctorName = content?.general?.doctorName || 'Fzt. Şilan Kartal';
   const clinicName = content?.header?.clinicName || 'Özel Sağlık Meslek Hizmet Birimi';
   const address = content?.general?.address || CONTACT_INFO.address;
@@ -182,18 +187,43 @@ export default function Hero({ initialContent }: { initialContent?: SiteContent 
               
               {/* Ana Görsel Çerçevesi - Dinamik */}
               <div className="relative h-[460px] sm:h-[520px] w-full rounded-3xl overflow-hidden shadow-xl border-2 border-white bg-slate-900">
-                <Image
-                  src={heroImage}
-                  alt={`${doctorName} Kliniği - Fizyoterapi ve Manuel Terapi`}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                  unoptimized={Boolean(heroImage && heroImage.startsWith('data:'))}
-                />
-                
-                {/* Karartma ve Bilgi Bandı */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                {heroImage ? (
+                  <>
+                    <Image
+                      src={heroImage}
+                      alt={`${doctorName} Kliniği - Fizyoterapi ve Manuel Terapi`}
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 40vw"
+                      className="object-cover"
+                      unoptimized={Boolean(heroImage && heroImage.startsWith('data:'))}
+                    />
+                    
+                    {/* Karartma ve Bilgi Bandı */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                  </>
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#124b43] via-[#155E54] to-[#0f2e29] flex flex-col items-center justify-center p-8 text-center text-white">
+                    <div className="w-24 h-24 rounded-3xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 mb-6 shadow-inner p-3">
+                      <Image
+                        src="/icon.png"
+                        alt="Klinik İkonu"
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-[11px] font-extrabold tracking-[0.25em] text-[#A3E0D4] uppercase mb-2">
+                      {clinicName}
+                    </span>
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {doctorName}
+                    </h3>
+                    <p className="text-xs text-teal-100/70 max-w-xs leading-relaxed">
+                      Kişiye özel bütüncül manuel terapi &amp; klinik fizyoterapi seansları
+                    </p>
+                  </div>
+                )}
                 
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <div className="text-[11px] font-bold tracking-[0.2em] text-[#A3E0D4] uppercase">

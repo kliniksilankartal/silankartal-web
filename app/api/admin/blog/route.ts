@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     };
 
     const updatedPosts = [newPost, ...posts];
-    saveSiteContent({ ...siteContent, blogPosts: updatedPosts });
+    await saveSiteContent({ ...siteContent, blogPosts: updatedPosts });
 
     // Sayfaları anında güncelle
     revalidatePath('/');

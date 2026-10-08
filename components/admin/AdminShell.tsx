@@ -8,7 +8,7 @@ import {
   FaHome, FaNewspaper, FaUserMd, FaHandHoldingMedical,
   FaQuestion, FaPhone, FaPalette, FaSearch,
   FaBars, FaTimes, FaExternalLinkAlt, FaSignOutAlt,
-  FaChartBar, FaChevronRight
+  FaChartBar, FaChevronRight, FaImage
 } from 'react-icons/fa';
 
 const navGroups = [
@@ -21,7 +21,8 @@ const navGroups = [
   {
     title: 'SAYFALAR VE İÇERİKLER',
     items: [
-      { href: '/admin/anasayfa', label: 'Anasayfa & Görseller', icon: FaHome },
+      { href: '/admin/anasayfa', label: 'Anasayfa İçeriği', icon: FaHome },
+      { href: '/admin/gorseller', label: 'Görseller & Medya', icon: FaImage },
       { href: '/admin/hakkimda', label: 'Hakkımda & Profil', icon: FaUserMd },
       { href: '/admin/hizmetler', label: 'Hizmetler', icon: FaHandHoldingMedical },
       { href: '/admin/blog', label: 'Blog Yazıları', icon: FaNewspaper },
