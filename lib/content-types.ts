@@ -110,7 +110,6 @@ export interface SiteContent {
   images: {
     heroImage: string;
     profileImage: string;
-    clinicImage: string;
   };
   hero: {
     badge: string;
@@ -237,7 +236,6 @@ export const defaultSiteContent: SiteContent = {
   images: {
     heroImage: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80',
     profileImage: '/images/avatar-placeholder.png',
-    clinicImage: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80',
   },
   hero: {
     badge: 'Başakşehir Kliniği — İstanbul',

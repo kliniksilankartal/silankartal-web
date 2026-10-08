@@ -41,9 +41,7 @@ export function parseContent(parsed: Record<string, any>): SiteContent {
   if (parsed.images && parsed.images.profileImage !== undefined) {
     images.profileImage = parsed.images.profileImage;
   }
-  if (parsed.images && parsed.images.clinicImage !== undefined) {
-    images.clinicImage = parsed.images.clinicImage;
-  }
+
 
   return {
     ...defaultSiteContent,
@@ -159,9 +157,7 @@ export async function saveSiteContent(content: Partial<SiteContent>): Promise<Si
   if (content.images && 'profileImage' in content.images) {
     updatedImages.profileImage = content.images.profileImage as string;
   }
-  if (content.images && 'clinicImage' in content.images) {
-    updatedImages.clinicImage = content.images.clinicImage as string;
-  }
+
 
   const updated: SiteContent = {
     ...current,

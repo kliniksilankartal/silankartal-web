@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FaSave, FaImage, FaUserMd, FaClinicMedical, FaCheck, FaExclamationTriangle, FaArrowRight } from 'react-icons/fa';
+import { FaSave, FaImage, FaUserMd, FaCheck, FaExclamationTriangle, FaArrowRight } from 'react-icons/fa';
 import ImageUploadZone from '@/components/admin/ImageUploadZone';
 
 export default function AdminGorsellerPage() {
   const [heroImage, setHeroImage] = useState('');
   const [profileImage, setProfileImage] = useState('');
-  const [clinicImage, setClinicImage] = useState('');
 
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -21,7 +20,6 @@ export default function AdminGorsellerPage() {
       .then((data) => {
         setHeroImage(data.images?.heroImage ?? '');
         setProfileImage(data.images?.profileImage ?? '');
-        setClinicImage(data.images?.clinicImage ?? '');
       })
       .catch((err) => {
         console.error('İçerik yükleme hatası:', err);
@@ -39,7 +37,6 @@ export default function AdminGorsellerPage() {
           images: {
             heroImage,
             profileImage,
-            clinicImage,
           },
         }),
       });
@@ -70,7 +67,7 @@ export default function AdminGorsellerPage() {
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900">Görselleri Güncelle</h1>
           <p className="text-sm text-slate-500 mt-1">
-            Sitenizdeki anasayfa hero fotoğrafını, uzman profil resmini ve klinik görsellerini buradan yönetebilirsiniz.
+            Sitenizdeki anasayfa hero fotoğrafını, ve uzman profil resmini buradan yönetebilirsiniz.
           </p>
         </div>
 
@@ -135,7 +132,7 @@ export default function AdminGorsellerPage() {
         </div>
       </div>
 
-      {/* 2. Profil ve Klinik Fotoğrafları */}
+      {/* 2. Profil Fotoğrafı */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Uzman Profil Fotoğrafı */}
         <div className={cardClass}>
@@ -161,29 +158,7 @@ export default function AdminGorsellerPage() {
           </div>
         </div>
 
-        {/* Klinik Mekan Görseli */}
-        <div className={cardClass}>
-          <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
-              <FaClinicMedical size={15} />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-slate-800">3. Klinik İç Mekan / Uygulama Fotoğrafı</h2>
-              <p className="text-xs text-slate-400">Klinik ortamı ve tedavi alanları görseli</p>
-            </div>
-          </div>
 
-          <div className="pt-2">
-            <ImageUploadZone
-              label="Klinik Görseli"
-              description="Yatay veya geniş açılı klinik fotoğrafı."
-              currentImage={clinicImage}
-              onImageUploaded={(url) => setClinicImage(url)}
-              onImageRemoved={() => setClinicImage('')}
-              aspectRatio="landscape"
-            />
-          </div>
-        </div>
       </div>
 
       {/* 3. Diğer Görsel Yönetim Alanları */}
