@@ -58,10 +58,16 @@ export default function Header() {
         >
           <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div className="flex items-center gap-5">
-              <span className="hidden sm:flex items-center gap-1.5 text-slate-400">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Fzt.%20%C5%9Eilan%20Kartal%20Ebik%20%C4%B0%C5%9F%20Merkezi%20Necmettin%20Erbakan%20Caddesi%20Ba%C5%9Fak%C5%9Fehir%20%C4%B0stanbul"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Google Haritalar'da aç"
+                className="hidden sm:flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
+              >
                 <FaMapMarkerAlt className="text-teal-400" size={11} />
                 <span>{city}</span>
-              </span>
+              </a>
               <span className="flex items-center gap-1.5">
                 <FaClock className="text-teal-400" size={11} />
                 <span>{workingHours}</span>
